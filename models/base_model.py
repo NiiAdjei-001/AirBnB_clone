@@ -30,8 +30,10 @@ class BaseModel:
     def __str__(self):
         """Returns a string representation of the BaseModel object
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__,
-                                     self.id, self.__dict__)
+        tmp = "[{}] ({}) {}".format(self.__class__.__name__,
+                                    self.id, self.__dict__)
+        print(tmp)
+        return tmp
 
     def save(self):
         """Saves changes to BaseModel Object
