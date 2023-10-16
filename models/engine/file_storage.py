@@ -9,32 +9,34 @@ class FileStorage:
     """File Storage Class
     """
 
-    def __init__(self, filepath='file.json', obj={}):
+    __file_path = "file.json"
+    __objects = {}
+
+    def __init__(self):
         """
         """
-        self.__file_path = filepath
-        self.__objects = obj
+        pass
 
     def all(self):
         """Returns the dictionary __objects
         """
-        return self.__objects
+        return type(self).__objects
 
     def new(self, obj):
         """Sets a new object 'obj' into the __objects dictionary
         """
         key = "{}.{}".format(obj['__class__'], obj['id'])
-        self.__objects[key] = obj
+        type(self).__objects[key] = obj
 
     def save(self):
         """Serializes __objects list to the JSON file(path:__file_path)
         """
-        with open(self.__file_path, 'w') as json_file:
-            json.dump(self.__objects, json_file)
+        with open(type(self).__file_path, 'w') as json_file:
+            json.dump(type(self).__objects, json_file)
 
     def reload(self):
         """Deserializes the JSON file to __objects
         """
-        if os.path.isfile(self.__file_path):
-            with open(self.__file_path, 'r') as json_file:
-                self.__objects = json.load(json_file)
+        if os.path.isfile(type(self).__file_path):
+            with open(type(self).__file_path, 'r') as json_file:
+                type(self).__objects = json.load(json_file)
