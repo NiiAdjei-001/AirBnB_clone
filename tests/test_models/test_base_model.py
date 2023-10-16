@@ -4,7 +4,7 @@ import sys
 from models.base_model import BaseModel
 
 
-class BaseModelTest(unittest.TestCase):
+class TestBaseModel(unittest.TestCase):
     """Base Model Test Class
     """
     def test__str__(self):
