@@ -39,6 +39,7 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict(self):
         """
         """
+        pass
 
 
 if __name__ == '__main__':
