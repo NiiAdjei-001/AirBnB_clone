@@ -7,6 +7,9 @@ from models.base_model import BaseModel
 class TestUserClass(unittest.TestCase):
     """Test User Class
     """
+    def test_2(self):
+        """"""
+        pass
 
 
 if __name__ == '__main__':
