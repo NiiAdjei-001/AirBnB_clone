@@ -52,8 +52,9 @@ class FileStorage:
         """reload():
 
             Description:
-                Populates __objects dictionary from json file
+                Repopulates __objects dictionary from json file
         """
+        self.all().clear()
         if os.path.isfile(type(self).__file_path):
             with open(type(self).__file_path, 'r') as json_file:
                 type(self).__objects = json.load(json_file)

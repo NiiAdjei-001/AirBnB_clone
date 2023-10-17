@@ -26,8 +26,6 @@ class BaseModel:
                 obj = BaseModel(kwargs) -- Creates a new instance of object
                                            with attributes in kwargs dictionary
         """
-        print("init args", *args)
-        print("init kwargs", kwargs)
         if len(kwargs) == 0:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -75,7 +73,7 @@ class BaseModel:
 
             Description:
                 Method used to convert BaseModel object into a dictionary
-                        object
+                object
         """
         obj_dict = {**(self.__dict__)}
         obj_dict['__class__'] = self.__class__.__name__
