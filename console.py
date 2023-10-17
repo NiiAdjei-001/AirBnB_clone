@@ -17,7 +17,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """emptyline()
 
-            Description: 
+            Description:
                 On empty line, do nothing
         """
         pass
@@ -70,10 +70,8 @@ class HBNBCommand(cmd.Cmd):
                 if (len(argv) > 1):
                     key = "{}.{}".format(argv[0], argv[1])
                     if (key in storage.all()):
-                        print("console Checker:", type(storage.all()[key]))
-                        print(storage.all()[key])
                         obj = BaseModel(**(storage.all()[key]))
-                        print(obj.__str__())
+                        print(str(obj))
                     else:
                         print("** no instance found **")
                 else:
@@ -82,7 +80,11 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
 
     def do_destroy(self, arg):
-        """Deletes an instance based on a class name and id
+        """destroy(arg):
+
+            Description:
+                Deletes an instance based on a class name and id
+
             Arg:
                 arg: <class name> <object id>
 
@@ -107,6 +109,37 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
+    def do_all(self, arg):
+        """all(arg):
+
+            Description:
+                Prints all objects. Can be filtered according to class.
+
+            Arg:
+                arg: <class name>
+
+            Implementation:
+                $ all                  # Prints all objects
+                ---
+                $ all <class name>     # Prints objects of given class
+                $ all User
+        """
+        def get_str(obj):
+            """"""
+            return str(parse_json_to_class_object(obj))
+
+        argv = parse(arg)
+        if len(argv) == 0:
+            print(list(map(get_str, storage.all().values())))
+        else:
+            if argv[0] in _built_in_classes:
+                objs = storage.all().values()
+                objs = list(filter(lambda o: o['__class__'] == argv[0], objs))
+                objs = list(map(get_str, objs))
+                print(objs)
+            else:
+                print("** class doesn't exist **")
+
     def do_EOF(self, line):
         """Exit on 'end of line' from console"""
         return True
@@ -117,8 +150,37 @@ class HBNBCommand(cmd.Cmd):
 
 
 def parse(arg):
-    """Converts a series of strings to an argument tuple"""
+    """parse(arg):
+
+        Description:
+            Converts a series of strings to an argument tuple
+
+        Return:
+            Returns a tuple of arguments
+    """
     return tuple(arg.split())
+
+
+_built_in_classes = ['BaseModel', 'User', 'State', 'City',
+                     'Amenity', 'Place', 'Review']
+
+
+def parse_json_to_class_object(json_obj):
+    """parse_json_to_class_obj(json_obj):
+
+        Description:
+            Parses a json object into a class object based on the json
+            object's key: '__class__'.
+
+        Return:
+            Returns an object of specific built in class
+    """
+    # built_in_classes = ['BaseModel', 'User', 'State', 'City',
+    #                     'Amenity', 'Place', 'Review']
+    class_name = json_obj['__class__']
+    if class_name in _built_in_classes:
+        if class_name == 'BaseModel':
+            return BaseModel(**json_obj)
 
 
 if __name__ == '__main__':
