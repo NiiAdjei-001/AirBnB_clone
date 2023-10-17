@@ -9,22 +9,29 @@ from models import storage
 
 class HBNBCommand(cmd.Cmd):
     """HBNBCommand Class: Command line shell interpreter interface for
-        testing.
+                          testing.
     """
     intro = ''
     prompt = '(hbnb)'
 
     def emptyline(self):
-        """On empty line, do nothing"""
+        """emptyline()
+
+            Description: 
+                On empty line, do nothing
+        """
         pass
 
     def do_create(self, arg):
-        """Create an object based of a class name and id.
+        """create(arg):
+
+            Description:
+                Create an object of a given class
             Arg:
                 arg: <class name>
 
             Return:
-                return object id
+                Return object id
 
             Implementation:
                 $ create <class name>
@@ -43,7 +50,10 @@ class HBNBCommand(cmd.Cmd):
                 print("** class doesn't exist **")
 
     def do_show(self, arg):
-        """Displays an instance based of a class name and id
+        """show(arg):
+
+            Description:
+                Displays an object referenced by a given id
             Arg:
                 arg: <class name> <object id>
 
@@ -60,8 +70,9 @@ class HBNBCommand(cmd.Cmd):
                 if (len(argv) > 1):
                     key = "{}.{}".format(argv[0], argv[1])
                     if (key in storage.all()):
-                        print("console Checker:", storage.all()[key])
-                        obj = BaseModel(storage.all()[key])
+                        print("console Checker:", type(storage.all()[key]))
+                        print(storage.all()[key])
+                        obj = BaseModel(**(storage.all()[key]))
                         print(obj.__str__())
                     else:
                         print("** no instance found **")
@@ -111,5 +122,4 @@ def parse(arg):
 
 
 if __name__ == '__main__':
-    print(dir(storage))
     HBNBCommand().cmdloop()

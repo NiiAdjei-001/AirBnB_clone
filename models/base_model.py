@@ -7,11 +7,14 @@ from models import storage
 
 
 class BaseModel:
-    """Base Model Class
+    """BaseModel Class
     """
 
     def __init__(self, *args, **kwargs):
-        """BaseModel(): Method used to initialize BaseModel object.
+        """BaseModel(*args, **kwargs):
+
+            Description:
+                Initializes a class instance.
 
             Args:
                 *args: a tuple of arguments (NOT USED)
@@ -23,6 +26,8 @@ class BaseModel:
                 obj = BaseModel(kwargs) -- Creates a new instance of object
                                            with attributes in kwargs dictionary
         """
+        print("init args", *args)
+        print("init kwargs", kwargs)
         if len(kwargs) == 0:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
@@ -37,10 +42,13 @@ class BaseModel:
                     setattr(self, key, val)
 
     def __str__(self):
-        """__str__(): Method used to get a string representation of
-                        an instance of class BaseModel
+        """__str__():
+
+            Description:
+                Returns a string representation of an object of BaseModel
+
             Returns:
-                format => "[<object class>] (<object id>) <object attributes>"
+                "[<object class>] (<object id>) <object attributes>"
         """
         class_name = self.__class__.__name__
         self_id = self.id
@@ -48,8 +56,10 @@ class BaseModel:
         return "[{}] ({}) {}".format(class_name, self_id, self_attributes)
 
     def save(self):
-        """save(): Method used to save changes of BaseModel instance.
-                    Changes are saved into the json file directly
+        """save():
+
+            Description:
+                Save current state of the object.
 
             Implementation:
                 obj = BaseModel()
@@ -61,11 +71,14 @@ class BaseModel:
         storage.save()
 
     def to_dict(self):
-        """to_dict(): Method used to convert BaseModel object into a dictionary
+        """to_dict():
+
+            Description:
+                Method used to convert BaseModel object into a dictionary
                         object
         """
-        obj = {**(self.__dict__)}
-        obj['__class__'] = self.__class__.__name__
-        obj['created_at'] = obj['created_at'].isoformat()
-        obj['updated_at'] = obj['updated_at'].isoformat()
-        return obj
+        obj_dict = {**(self.__dict__)}
+        obj_dict['__class__'] = self.__class__.__name__
+        # obj_dict['created_at'] = obj_dict['created_at'].isoformat()
+        # obj_dict['updated_at'] = obj_dict['updated_at'].isoformat()
+        return obj_dict

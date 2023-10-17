@@ -34,7 +34,8 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         """
         """
-        pass
+        obj = BaseModel()
+        obj.save()
 
     def test_to_dict(self):
         """
