@@ -38,16 +38,15 @@ class HBNBCommand(cmd.Cmd):
                 $ create User
         """
         argv = parse(arg)
-        if len(argv) == 0:
+        if argv is None or len(argv) < 1:
             print("** class name missing **")
             return
-        if len(argv) == 1:
-            if (argv[0] == "BaseModel"):
-                obj = BaseModel()
-                print(obj.id)
-                obj.save()
-            else:
-                print("** class doesn't exist **")
+        if (argv[0] == "BaseModel"):
+            obj = BaseModel()
+            print(obj.id)
+            obj.save()
+        else:
+            print("** class doesn't exist **")
 
     def do_show(self, arg):
         """show(arg):
@@ -62,22 +61,21 @@ class HBNBCommand(cmd.Cmd):
                 $ show User fe15e5e2d6e2d6e2de6d6ed
         """
         argv = parse(arg)
-        if len(argv) == 0:
+        if argv is None or len(argv) < 1:
             print("** class name missing **")
             return
-        if len(argv) >= 1:
-            if (argv[0] == "BaseModel"):
-                if (len(argv) > 1):
-                    key = "{}.{}".format(argv[0], argv[1])
-                    if (key in storage.all()):
-                        obj = BaseModel(**(storage.all()[key]))
-                        print(str(obj))
-                    else:
-                        print("** no instance found **")
-                else:
-                    print("** instance id missing **")
-            else:
-                print("** class doesn't exist **")
+        if not (argv[0] in _built_in_classes):
+            print("** class doesn't exist **")
+            return
+        if (len(argv) < 2):
+            print("** instance id missing **")
+            return
+        key = "{}.{}".format(argv[0], argv[1])
+        if not (key in storage.all()):
+            print("** no instance found **")
+            return
+        obj = BaseModel(**(storage.all()[key]))
+        print(str(obj))
 
     def do_destroy(self, arg):
         """destroy(arg):
@@ -93,21 +91,21 @@ class HBNBCommand(cmd.Cmd):
                 $ destroy User fe15e5e2d6e2d6e2de6d6ed
         """
         argv = parse(arg)
-        if len(argv) == 0:
+        if argv is None or len(argv) < 1:
             print("** class name missing **")
             return
-        if (argv[0] == "BaseModel"):
-            if (len(argv) > 1):
-                key = "{}.{}".format(argv[0], argv[1])
-                if (key in storage.all()):
-                    del storage.all()[key]
-                    storage.save()
-                else:
-                    print("** no instance found **")
-            else:
-                print("** instance id missing **")
-        else:
+        if not (argv[0] in _built_in_classes):
             print("** class doesn't exist **")
+            return
+        if (len(argv) < 2):
+            print("** instance id missing **")
+            return
+        key = "{}.{}".format(argv[0], argv[1])
+        if not (key in storage.all()):
+            print("** no instance found **")
+            return
+        del storage.all()[key]
+        storage.save()
 
     def do_all(self, arg):
         """all(arg):
@@ -129,16 +127,55 @@ class HBNBCommand(cmd.Cmd):
             return str(parse_json_to_class_object(obj))
 
         argv = parse(arg)
-        if len(argv) == 0:
+        if argv is None or len(argv) < 1:
             print(list(map(get_str, storage.all().values())))
-        else:
-            if argv[0] in _built_in_classes:
-                objs = storage.all().values()
-                objs = list(filter(lambda o: o['__class__'] == argv[0], objs))
-                objs = list(map(get_str, objs))
-                print(objs)
-            else:
-                print("** class doesn't exist **")
+            return
+        if not (argv[0] in _built_in_classes):
+            print("** class doesn't exist **")
+            return
+        objs = storage.all().values()
+        objs = list(filter(lambda o: o['__class__'] == argv[0], objs))
+        objs = list(map(get_str, objs))
+        print(objs)
+
+    def do_update(self, arg):
+        """update(arg):
+
+            Description:
+                Updates a field of an object.
+
+            Args:
+                arg: <class name> <id> <attribute name> "<attribute value>"
+
+            Implementation:
+            $ update <class name> <obj id> <attribute name> <attribute value>
+            $ update User fe15e5e2d6e2d6e2de6d6ed first_name Allen
+
+        """
+        argv = parse(arg)
+        if argv is None:
+            print("** class name missing **")
+            return
+        argc = len(argv)
+        if not (argv[0] in _built_in_classes):
+            print("** class doesn't exist **")
+            return
+        if argc < 2:
+            print("** instance id missing **")
+            return
+        key = "{}.{}".format(argv[0], argv[1])
+        if not (key in storage.all().keys()):
+            print("** no instance found **")
+            return
+        if argc < 3:
+            print("** attribute name missing **")
+            return
+        if argc < 4:
+            print("** value missing **")
+            return
+        json_obj = storage.all()[key]
+        json_obj[argv[2]] = str(argv[3].split('" ', 1)[0].replace('"', ''))
+        # storage.save()
 
     def do_EOF(self, line):
         """Exit on 'end of line' from console"""
@@ -158,7 +195,11 @@ def parse(arg):
         Return:
             Returns a tuple of arguments
     """
-    return tuple(arg.split())
+    # element = tuple(arg.split(' ',3))
+    # print(element)
+    if arg == "":
+        return None
+    return tuple(arg.split(' ', 4))
 
 
 _built_in_classes = ['BaseModel', 'User', 'State', 'City',

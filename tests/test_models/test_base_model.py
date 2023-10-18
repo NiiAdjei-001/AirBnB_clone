@@ -24,7 +24,7 @@ class TestBaseModel(unittest.TestCase):
         obj = BaseModel()
         val = [None, ""]
         self.assertNotIn(obj, val)
- 
+
     def test_id_type(self):
         """Test obj.id is of type str
         """
