@@ -9,9 +9,9 @@ class TestAmenityClass(unittest.TestCase):
     def test_name(self):
         """"""
         amenity = Amenity()
-        amenity.name = 'Spa'
-        self.assertEqual(amenity.name, 'Spa')
-        self.assertIs(type(amenity.name), str)
+        type(amenity).name = 'Spa'
+        self.assertEqual(type(amenity).name, 'Spa')
+        self.assertIs(type(type(amenity).name), str)
 
 
 if __name__ == '__main__':

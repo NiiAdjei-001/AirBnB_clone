@@ -10,31 +10,30 @@ class TestUserClass(unittest.TestCase):
     def test_first_name(self):
         """"""
         user = User()
-        user.first_name = 'John'
-        self.assertEqual(user.first_name, 'John')
-        self.assertIs(type(user.first_name), str)
+        type(user).first_name = 'John'
+        self.assertEqual(type(user).first_name, 'John')
+        self.assertIs(type(type(user).first_name), str)
 
     def test_last_name(self):
         """"""
         user = User()
-        user.last_name = 'Doe'
-        self.assertEqual(user.last_name, 'Doe')
-        self.assertIs(type(user.last_name), str)
+        type(user).last_name = 'Doe'
+        type(self).assertEqual(type(user).last_name, 'Doe')
+        type(self).assertIs(type(type(user).last_name), str)
 
     def test_email(self):
         """"""
         user = User()
-        user.email = 'John@Doe.com'
-        self.assertEqual(user.email, 'John@Doe.com')
-        self.assertIs(type(user.email), str)
+        type(user).email = 'John@Doe.com'
+        self.assertEqual(type(user).email, 'John@Doe.com')
+        self.assertIs(type(type(user).email), str)
 
     def test_password(self):
         """"""
         user = User()
-        user.password = 'root'
-        self.assertEqual(user.password, 'root')
-        self.assertIs(type(user.password), str)
-
+        type(user).password = 'root'
+        self.assertEqual(type(user).password, 'root')
+        self.assertIs(type(type(user).password), str)
 
 
 if __name__ == '__main__':

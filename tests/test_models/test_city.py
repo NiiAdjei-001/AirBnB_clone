@@ -11,16 +11,16 @@ class TestCityClass(unittest.TestCase):
         """"""
         city = City()
         _id = str(uuid.uuid4())
-        city.state_id = _id
-        self.assertEqual(city.state_id, _id)
-        self.assertIs(type(city.state_id), str)
+        type(city).state_id = _id
+        self.assertEqual(type(city).state_id, _id)
+        self.assertIs(type(type(city).state_id), str)
 
     def test_name(self):
         """"""
         city = City()
-        city.name = 'Dallas'
-        self.assertEqual(city.name, 'Dallas')
-        self.assertIs(type(city.name), str)
+        type(city).name = 'Dallas'
+        self.assertEqual(type(city).name, 'Dallas')
+        self.assertIs(type(type(city).name), str)
 
 
 if __name__ == '__main__':
