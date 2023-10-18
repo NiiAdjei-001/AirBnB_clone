@@ -10,12 +10,12 @@ from models.base_model import BaseModel
 class TestFileStorageClass(unittest.TestCase):
     """Test FileStorage Class
     """
-    def test_file_path(self):
+    def test___file_path(self):
         """"""
         fs = FileStorage()
         self.assertEqual(type(fs)._FileStorage__file_path, 'file.json')
 
-    def test_objects(self):
+    def test___objects(self):
         """"""
         fs = FileStorage()
         self.assertEqual(type(fs._FileStorage__objects), dict)
