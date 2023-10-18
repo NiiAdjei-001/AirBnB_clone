@@ -245,7 +245,6 @@ def create_class(class_name, **kwargs):
         return Place(**kwargs)
     if class_name == 'Review':
         return Review(**kwargs)
-    
 
 
 def parse_json_to_class_object(json_obj):
