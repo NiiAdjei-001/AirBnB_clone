@@ -7,6 +7,10 @@ from models.base_model import BaseModel
 class User(BaseModel):
     """User Class
     """
+    first_name = ""
+    last_name = ""
+    password = ""
+    email = ""
 
     def __init__(self, *args, **kwargs):
         """User(*args, **kwargs):
@@ -25,7 +29,3 @@ class User(BaseModel):
                                            with attributes in kwargs dictionary
         """
         super().__init__(self, *args, **kwargs)
-        self.first_name = ""
-        self.last_name = ""
-        self.password = ""
-        self.email = ""

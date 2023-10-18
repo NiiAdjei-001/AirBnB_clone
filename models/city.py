@@ -7,7 +7,9 @@ from models.base_model import BaseModel
 class City(BaseModel):
     """City Class
     """
-
+    state_id = ""
+    name = ""
+    
     def __init__(self, *args, **kwargs):
         """City(*args, **kwargs):
 
@@ -25,5 +27,3 @@ class City(BaseModel):
                                            with attributes in kwargs dictionary
         """
         super().__init__(self, *args, **kwargs)
-        self.state_id = ""
-        self.name = ""

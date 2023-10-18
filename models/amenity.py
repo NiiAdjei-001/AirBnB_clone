@@ -8,6 +8,8 @@ class Amenity(BaseModel):
     """Amenity Class
     """
 
+    name = ""
+
     def __init__(self, *args, **kwargs):
         """Amenity(*args, **kwargs):
 
@@ -25,4 +27,3 @@ class Amenity(BaseModel):
                                            with attributes in kwargs dictionary
         """
         super().__init__(self, *args, **kwargs)
-        self.name = ""

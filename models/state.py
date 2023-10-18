@@ -7,6 +7,8 @@ from models.base_model import BaseModel
 class State(BaseModel):
     """State Class
     """
+    
+    name = ""
 
     def __init__(self, *args, **kwargs):
         """State(*args, **kwargs):
@@ -25,4 +27,3 @@ class State(BaseModel):
                                            with attributes in kwargs dictionary
         """
         super().__init__(self, *args, **kwargs)
-        self.name = ""
