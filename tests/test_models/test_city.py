@@ -1,15 +1,26 @@
 #!/usr/bin/python3
 import unittest
-import sys
-from models.base_model import BaseModel
+import uuid
+from models.city import City
 
 
 class TestCityClass(unittest.TestCase):
     """Test City Class
     """
-    def test_1(self):
+    def test_state_id(self):
         """"""
-        pass
+        city = City()
+        _id = str(uuid.uuid4())
+        city.state_id = _id
+        self.assertEqual(city.state_id, _id)
+        self.assertIs(type(city.state_id), str)
+
+    def test_name(self):
+        """"""
+        city = City()
+        city.name = 'Dallas'
+        self.assertEqual(city.name, 'Dallas')
+        self.assertIs(type(city.name), str)
 
 
 if __name__ == '__main__':

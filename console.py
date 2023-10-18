@@ -4,6 +4,12 @@
 import sys
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models import storage
 
 
@@ -41,12 +47,12 @@ class HBNBCommand(cmd.Cmd):
         if argv is None or len(argv) < 1:
             print("** class name missing **")
             return
-        if (argv[0] == "BaseModel"):
-            obj = BaseModel()
-            print(obj.id)
-            obj.save()
-        else:
+        if not (argv[0] in _built_in_classes):
             print("** class doesn't exist **")
+            return
+        obj = create_class(argv[0])
+        print(obj.id)
+        obj.save()
 
     def do_show(self, arg):
         """show(arg):
@@ -74,7 +80,7 @@ class HBNBCommand(cmd.Cmd):
         if not (key in storage.all()):
             print("** no instance found **")
             return
-        obj = BaseModel(**(storage.all()[key]))
+        obj = create_class(argv[0], **(storage.all()[key]))
         print(str(obj))
 
     def do_destroy(self, arg):
@@ -175,7 +181,7 @@ class HBNBCommand(cmd.Cmd):
             return
         json_obj = storage.all()[key]
         json_obj[argv[2]] = str(argv[3].split('" ', 1)[0].replace('"', ''))
-        # storage.save()
+        storage.save()
 
     def do_EOF(self, line):
         """Exit on 'end of line' from console"""
@@ -206,6 +212,42 @@ _built_in_classes = ['BaseModel', 'User', 'State', 'City',
                      'Amenity', 'Place', 'Review']
 
 
+def create_class(class_name, **kwargs):
+    """create_class(class_name, **kwargs)
+
+        Description:
+            Creates a class object give a class name. Passes attributes
+            to class if available.
+
+        Args:
+            class_name: Name of the class
+            **kwargs: A dictionary of the class bearing its attributes
+
+        Returns:
+            Returns an object of specified class
+
+        Class List:
+            [BaseModel, User, State, City, Amenity, Place, Review]
+    """
+    if not (class_name in _built_in_classes):
+        return None
+    if class_name == 'BaseModel':
+        return BaseModel(**kwargs)
+    if class_name == 'User':
+        return User(**kwargs)
+    if class_name == 'State':
+        return State(**kwargs)
+    if class_name == 'City':
+        return City(**kwargs)
+    if class_name == 'Amenity':
+        return Amenity(**kwargs)
+    if class_name == 'Place':
+        return Place(**kwargs)
+    if class_name == 'Review':
+        return Review(**kwargs)
+    
+
+
 def parse_json_to_class_object(json_obj):
     """parse_json_to_class_obj(json_obj):
 
@@ -216,12 +258,11 @@ def parse_json_to_class_object(json_obj):
         Return:
             Returns an object of specific built in class
     """
-    # built_in_classes = ['BaseModel', 'User', 'State', 'City',
-    #                     'Amenity', 'Place', 'Review']
     class_name = json_obj['__class__']
-    if class_name in _built_in_classes:
-        if class_name == 'BaseModel':
-            return BaseModel(**json_obj)
+    if not (class_name in _built_in_classes):
+        return None
+    obj = create_class(class_name, **json_obj)
+    return obj
 
 
 if __name__ == '__main__':

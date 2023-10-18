@@ -1,15 +1,15 @@
 #!/usr/bin/python3
-"""user
+"""state
 """
 from models.base_model import BaseModel
 
 
-class User(BaseModel):
-    """User Class
+class State(BaseModel):
+    """State Class
     """
 
     def __init__(self, *args, **kwargs):
-        """User(*args, **kwargs):
+        """State(*args, **kwargs):
 
             Description:
                 Initializes a class instance.
@@ -19,13 +19,10 @@ class User(BaseModel):
                 **kwargs: a dictionary of attribute values
 
             Implementation:
-                obj = User() -- Creates a new instance of object
+                obj = State() -- Creates a new instance of object
                 ---
-                obj = User(kwargs) -- Creates a new instance of object
+                obj = State(kwargs) -- Creates a new instance of object
                                            with attributes in kwargs dictionary
         """
         super().__init__(self, *args, **kwargs)
-        self.first_name = ""
-        self.last_name = ""
-        self.password = ""
-        self.email = ""
+        self.name = ""
