@@ -8,8 +8,8 @@ class City(BaseModel):
     """City Class
     """
 
-    state_id = ""
-    name = ""
+    state_id = None
+    name = None
 
     def __init__(self, *args, **kwargs):
         """City(*args, **kwargs):

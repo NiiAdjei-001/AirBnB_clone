@@ -8,7 +8,7 @@ class Amenity(BaseModel):
     """Amenity Class
     """
 
-    name = ""
+    name = None
 
     def __init__(self, *args, **kwargs):
         """Amenity(*args, **kwargs):

@@ -8,7 +8,7 @@ class State(BaseModel):
     """State Class
     """
 
-    name = ""
+    name = None
 
     def __init__(self, *args, **kwargs):
         """State(*args, **kwargs):

@@ -8,9 +8,9 @@ class Review(BaseModel):
     """Review Class
     """
 
-    place_id = ""
-    user_id = ""
-    text = ""
+    place_id = None
+    user_id = None
+    text = None
 
     def __init__(self, *args, **kwargs):
         """Review(*args, **kwargs):

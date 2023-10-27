@@ -7,10 +7,10 @@ from models.base_model import BaseModel
 class User(BaseModel):
     """User Class
     """
-    first_name = ""
-    last_name = ""
-    password = ""
-    email = ""
+    first_name = None
+    last_name = None
+    password = None
+    email = None
 
     def __init__(self, *args, **kwargs):
         """User(*args, **kwargs):
