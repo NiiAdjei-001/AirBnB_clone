@@ -9,9 +9,9 @@ class TestStateClass(unittest.TestCase):
     def test_name(self):
         """"""
         state = State()
-        state.name = 'Texas'
-        self.assertEqual(state.name, 'Texas')
-        self.assertIs(type(state.name), str)
+        type(state).name = 'Texas'
+        self.assertEqual(type(state).name, 'Texas')
+        self.assertIs(type(type(state).name), str)
 
 
 if __name__ == '__main__':

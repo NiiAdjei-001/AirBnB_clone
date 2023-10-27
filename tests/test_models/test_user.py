@@ -18,8 +18,8 @@ class TestUserClass(unittest.TestCase):
         """"""
         user = User()
         type(user).last_name = 'Doe'
-        type(self).assertEqual(type(user).last_name, 'Doe')
-        type(self).assertIs(type(type(user).last_name), str)
+        self.assertEqual(type(user).last_name, 'Doe')
+        self.assertIs(type(type(user).last_name), str)
 
     def test_email(self):
         """"""
