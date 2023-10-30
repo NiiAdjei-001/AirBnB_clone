@@ -64,7 +64,7 @@ class BaseModel:
                 obj.name = "Quirgmire"
                 obj.save()
         """
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.isoformat(datetime.now())
         storage.new(self)
         storage.save()
 
