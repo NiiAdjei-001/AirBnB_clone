@@ -30,6 +30,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
+            storage.new(self)
         else:
             for key, val in kwargs.items():
                 if key in ['created_at', 'updated_at']:
@@ -65,8 +66,8 @@ class BaseModel:
                 obj.save()
         """
         self.updated_at = datetime.now()
-        # storage.new(self)
-        # storage.save()
+        storage.new(self)
+        storage.save()
 
     def to_dict(self):
         """to_dict():

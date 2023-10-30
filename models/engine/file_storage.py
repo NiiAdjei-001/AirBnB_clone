@@ -1,8 +1,15 @@
 #!/usr/bin/python3
 """file_storage module
 """
+import sys
+import os
 import json
-import os.path
+# from models.user import User
+# from models.state import State
+# from models.city import City
+# from models.amenity import Amenity
+# from models.place import Place
+# from models.review import Review
 from datetime import datetime
 
 
@@ -12,6 +19,7 @@ class FileStorage:
     __file_path = "file.json"  # file path for json file which will store data
     __objects = {}  # dictionary variable to store the content of stored data
 
+    
     def __init__(self):
         """
         """
@@ -37,7 +45,7 @@ class FileStorage:
                 obj: An object instance
         """
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.all()[key] = obj
+        self.all()[key] = obj.to_dict()
 
     def save(self):
         """save():
@@ -45,8 +53,12 @@ class FileStorage:
             Description:
                 Saves the content of __object dictionary into json file
         """
+        json_obj = {}
+        
+        for key, obj_dic in self.all().items():
+            json_obj[key] = serialize(obj_dic)
         with open(type(self).__file_path, 'w') as json_file:
-            json.dump(type(self).__objects, json_file)
+            json.dump(json_obj, json_file)
 
     def reload(self):
         """reload():
@@ -57,24 +69,23 @@ class FileStorage:
         self.all().clear()
         if os.path.isfile(type(self).__file_path):
             with open(type(self).__file_path, 'r') as json_file:
-                type(self).__objects = json.load(json_file)
+                for key, val in json.load(json_file).items():
+                    self.all()[key] = deserialize(val)
 
 
-def serialize_obj(obj):
-    """serialize_obj(obj: Object):
+def serialize(obj_dic):
+    """serialize(obj: Object):
 
         Description:
             Serialize Object into JSON format
 
         Args:
-            obj: a class instance
+            obj_dic: an object dict
 
         Return:
             Json format of object
     """
-    obj_dic = obj.__dict__
     convert_datetime_to_iso(obj_dic)
-    obj_dic['__class__'] = obj.__class__.__name__
     return obj_dic
 
 
@@ -103,14 +114,17 @@ def convert_datetime_to_iso(obj_dic, list_attributes=None):
                     obj_dic[attr] = val.isoformat()
 
 
-def deserialize_obj(json_obj):
-    """deserialize_obj(json_obj: dict)
+def deserialize(json_obj):
+    """deserialize(json_obj: dict)
 
         Description:
-            Deserialize json object into object form
+            Deserialize json obj
 
         Args:
-            obj: a class instance
+            json_str: a string in json format
+
+        Return:
+
     """
     convert_iso_to_datetime(json_obj)
     return json_obj
@@ -134,3 +148,7 @@ def convert_iso_to_datetime(json_obj, list_attribute=None):
             pass
         except TypeError:
             pass
+
+
+def print_pretty(json_str):
+    print(json.dumps(json_str, indent=4))
