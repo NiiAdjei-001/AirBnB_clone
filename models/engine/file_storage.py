@@ -4,6 +4,7 @@
 import sys
 import os
 import json
+from models.base_model import BaseModel
 # from models.user import User
 # from models.state import State
 # from models.city import City
@@ -19,7 +20,6 @@ class FileStorage:
     __file_path = "file.json"  # file path for json file which will store data
     __objects = {}  # dictionary variable to store the content of stored data
 
-    
     def __init__(self):
         """
         """
@@ -54,7 +54,6 @@ class FileStorage:
                 Saves the content of __object dictionary into json file
         """
         json_obj = {}
-        
         for key, obj_dic in self.all().items():
             json_obj[key] = serialize(obj_dic)
         with open(type(self).__file_path, 'w') as json_file:
