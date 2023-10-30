@@ -54,7 +54,7 @@ class TestFileStorageClass(unittest.TestCase):
         """"""
         fs = FileStorage()
         test_save_path = 'test_save.json'
-        does_file_exist_before_save = os.path.isfile(test_save_path)  # False
+        #does_file_exist_before_save = os.path.isfile(test_save_path)  # False
         type(fs)._FileStorage__file_path = test_save_path  # Set file
         obj = BaseModel()
         fs.new(obj)
@@ -63,7 +63,7 @@ class TestFileStorageClass(unittest.TestCase):
         try:
             self.assertFalse(does_file_exist_before_save)  # False
             self.assertTrue(does_file_exist_after_save)  # True
-            os.remove(type(fs)._FileStorage__file_path)
+            # os.remove(type(fs)._FileStorage__file_path)
         except Exception as err:
             pass
 

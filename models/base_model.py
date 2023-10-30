@@ -32,10 +32,10 @@ class BaseModel:
             self.updated_at = self.created_at
         else:
             for key, val in kwargs.items():
-                if key == '__class__':
-                    pass
-                elif key in ['created_at', 'updated_at']:
+                if key in ['created_at', 'updated_at']:
                     setattr(self, key, datetime.fromisoformat(val))
+                elif key == '__class__':
+                    pass
                 else:
                     setattr(self, key, val)
 
@@ -77,6 +77,6 @@ class BaseModel:
         """
         obj_dict = {**(self.__dict__)}
         obj_dict['__class__'] = self.__class__.__name__
-        obj_dict['created_at'] = self.created_at
-        obj_dict['updated_at'] = self.updated_at
+        obj_dict['created_at'] = datetime.isoformat(self.created_at)
+        obj_dict['updated_at'] = datetime.isoformat(self.updated_at)
         return obj_dict

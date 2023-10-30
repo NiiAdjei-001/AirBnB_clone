@@ -37,7 +37,7 @@ class FileStorage:
                 obj: An object instance
         """
         key = "{}.{}".format(obj.__class__.__name__, obj.id)
-        self.all()[key] = serialize_obj(obj)
+        self.all()[key] = obj
 
     def save(self):
         """save():
