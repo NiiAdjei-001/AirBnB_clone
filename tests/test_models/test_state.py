@@ -13,6 +13,22 @@ class TestStateClass(unittest.TestCase):
         state.name = 'John'
         self.assertIsNone(type(state).name)
         self.assertIsNot(state.name, type(state).name)
+    
+    def test_name(self):
+        """"""
+        state = State()
+        type(state).name = None
+        state.name = 'John'
+        self.assertIsNone(type(state).name)
+        self.assertIsNot(state.name, type(state).name)
+
+    def test_state(self):
+        """"""
+        state = State()
+        type(state).name = None
+        state.name = 'John'
+        self.assertIsNone(type(state).name)
+        self.assertIsNot(state.name, type(state).name)
 
 
 if __name__ == '__main__':
