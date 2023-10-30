@@ -10,6 +10,7 @@ __all__ = ["base_model",
            "place",
            "review"]
 
+
 """Unique storage object"""
 storage = FileStorage()
 
