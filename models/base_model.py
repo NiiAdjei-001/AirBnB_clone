@@ -65,8 +65,8 @@ class BaseModel:
                 obj.save()
         """
         self.updated_at = datetime.isoformat(datetime.now())
-        storage.new(self)
-        storage.save()
+        # storage.new(self)
+        # storage.save()
 
     def to_dict(self):
         """to_dict():
