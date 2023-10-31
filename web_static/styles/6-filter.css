@@ -46,16 +46,17 @@
 .filters .locations:hover .popover{
 	display: block;
 	width: 100%;
-	z-index: 24;
 }
 
 .filters * .popover {
 	display: none;
-	width: 100%;
+	width: inherit;
 	background-color: #FAFAFA;
 	border: 1px solid #DDDDDD;
 	border-radius: 4px;
-	margin: 5px 0px 0px -1px;
+	position: relative;
+	top: 3px;
+	left: -1px;
 	z-index: 12;
 }
 
