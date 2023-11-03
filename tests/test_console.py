@@ -7,8 +7,8 @@ class TestConsoleClass(unittest.TestCase):
         HBNBCommand().onecmd("help show")
     """Test Console Class
     """
-    def test_quit(self):
+    def test_do_quit(self):
         """Test quit function
         """
-        pass
+        print('Fail')
 
